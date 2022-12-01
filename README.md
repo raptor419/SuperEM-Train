@@ -29,6 +29,7 @@ scipy>=1.6.0
 
 ## Instructions  
 This repository is a training implementaion of https://github.com/kiharalab/EM-GAN
+
 Inference Instructions are same as the repository above. For training give pre-existing G_path and D_path parameters 
 and keep training data in  `./data/EM_DATA/`
 
