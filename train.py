@@ -30,6 +30,8 @@ def main():
 	parser.add_argument("--save_state", nargs='?', const=True, default=False, help="Specify this to NOT save state and loss")
 	parser.add_argument("--norm", help="BN or IN for Generator")
 	parser.add_argument("--train_data", default='./data/EM_data/dataset', help="Input Directory for Train Data")
+	parser.add_argument("--G_path", default='', help="Generator mdoel path")
+	parser.add_argument("--D_path", default='', help="Discriminator mdoel path")
 
 	args = parser.parse_args()
 	print(args.batch_size)
@@ -46,6 +48,8 @@ def main():
 	# Create loader with data
 	batch_size = args.batch_size
 	val_batch_size = args.batch_size
+	pathG=args.G_path
+	pathD=args.D_path
 	validation_per = 0.1
 	shuffle_dataset = True
 	random_seed= 42
@@ -93,7 +97,12 @@ def main():
 	logger = Logger(model_name='SuperEMGAN', data_name='EM')
 	G = Generator(in_channels,2,res_blocks, args.downsample, args.dropout, args.norm)
 	D = Discriminator(in_channels,args.dropout)
-
+	
+	if pathG!='':
+	    G.load_state_dict(torch.load(pathG))
+	if pathG!='':
+	    D.load_state_dict(torch.load(pathD))
+	
 	G.cuda()
 	D.cuda()
 
